@@ -200,9 +200,9 @@ class Mention {
       this.mentionList.childNodes[
         this.itemIndex
       ].dataset.value = `<a href="${link}" target=${itemTarget ||
-        this.options.linkTarget}>${
+      this.options.linkTarget}>${
         this.mentionList.childNodes[this.itemIndex].dataset.value
-      }`;
+        }`;
     }
     return this.mentionList.childNodes[this.itemIndex].dataset;
   }
@@ -235,14 +235,13 @@ class Mention {
       this.cursorPos - this.mentionCharPos,
       Quill.sources.USER
     );
-    this.quill.insertEmbed(
+    this.quill.insertText(
       prevMentionCharPos,
-      "mention",
-      render,
+      render.id,
       Quill.sources.USER
     );
     if (this.options.spaceAfterInsert) {
-      this.quill.insertText(prevMentionCharPos + 1, " ", Quill.sources.USER);
+      this.quill.insertText(prevMentionCharPos + render.id.length + 1, "", Quill.sources.USER);
       // setSelection here sets cursor position
       this.quill.setSelection(prevMentionCharPos + 2, Quill.sources.USER);
     } else {
