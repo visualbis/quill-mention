@@ -419,8 +419,16 @@ class Mention {
 
     this.mentionContainer.style.top = `${topPos}px`;
     this.mentionContainer.style.left = `${leftPos}px`;
-
     this.mentionContainer.style.visibility = "visible";
+
+    let rect = this.mentionContainer.getBoundingClientRect();
+    let x = rect.left + rect.width;
+    let x1 = containerPos.left + containerPos.width;
+    let left = 0;
+    if (x1 < x) {
+      left = Math.abs(x - x1);
+    }
+    this.mentionContainer.style.left = "".concat((leftPos - left), "px");
   }
 
   getTextBeforeCursor() {
