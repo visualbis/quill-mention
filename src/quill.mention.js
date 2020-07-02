@@ -38,6 +38,7 @@ class Mention {
       isolateCharacter: false,
       fixMentionsToQuill: false,
       defaultMenuOrientation: "bottom",
+      blotName: "mention",
       dataAttributes: ["id", "value", "denotationChar", "link", "target"],
       linkTarget: "_blank",
       onOpen() {
@@ -240,7 +241,6 @@ class Mention {
       render.id,
       Quill.sources.USER
     );
-    console.log(render.id, render.id.length)
     if (this.options.spaceAfterInsert) {
       this.quill.insertText(prevMentionCharPos + 2, "", Quill.sources.USER);
       // setSelection here sets cursor position
