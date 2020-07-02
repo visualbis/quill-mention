@@ -240,12 +240,13 @@ class Mention {
       render.id,
       Quill.sources.USER
     );
+    console.log(render.id, render.id.length)
     if (this.options.spaceAfterInsert) {
-      this.quill.insertText(prevMentionCharPos + render.id.length + 1, "", Quill.sources.USER);
+      this.quill.insertText(prevMentionCharPos + 2, "", Quill.sources.USER);
       // setSelection here sets cursor position
-      this.quill.setSelection(prevMentionCharPos + 2, Quill.sources.USER);
+      this.quill.setSelection(prevMentionCharPos + render.id.length + 2, Quill.sources.USER);
     } else {
-      this.quill.setSelection(prevMentionCharPos + 1, Quill.sources.USER);
+      this.quill.setSelection(prevMentionCharPos + render.id.length + 1, Quill.sources.USER);
     }
     this.hideMentionList();
   }
