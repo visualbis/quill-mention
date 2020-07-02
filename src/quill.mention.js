@@ -64,7 +64,7 @@ class Mention {
     this.mentionContainer.className = this.options.mentionContainerClass
       ? this.options.mentionContainerClass
       : "";
-    this.mentionContainer.style.cssText = "display: none; position: absolute;";
+    this.mentionContainer.style.cssText = "display: none; position: fixed;";
     this.mentionContainer.onmousemove = this.onContainerMouseMove.bind(this);
 
     if (this.options.fixMentionsToQuill) {
@@ -201,9 +201,9 @@ class Mention {
       this.mentionList.childNodes[
         this.itemIndex
       ].dataset.value = `<a href="${link}" target=${itemTarget ||
-        this.options.linkTarget}>${
+      this.options.linkTarget}>${
         this.mentionList.childNodes[this.itemIndex].dataset.value
-      }`;
+        }`;
     }
     return this.mentionList.childNodes[this.itemIndex].dataset;
   }
@@ -236,18 +236,17 @@ class Mention {
       this.cursorPos - this.mentionCharPos,
       Quill.sources.USER
     );
-    this.quill.insertEmbed(
+    this.quill.insertText(
       prevMentionCharPos,
-      this.options.blotName,
-      render,
+      render.id,
       Quill.sources.USER
     );
     if (this.options.spaceAfterInsert) {
-      this.quill.insertText(prevMentionCharPos + 1, " ", Quill.sources.USER);
+      this.quill.insertText(prevMentionCharPos + 2, "", Quill.sources.USER);
       // setSelection here sets cursor position
-      this.quill.setSelection(prevMentionCharPos + 2, Quill.sources.USER);
+      this.quill.setSelection(prevMentionCharPos + render.id.length + 2, Quill.sources.USER);
     } else {
-      this.quill.setSelection(prevMentionCharPos + 1, Quill.sources.USER);
+      this.quill.setSelection(prevMentionCharPos + render.id.length + 1, Quill.sources.USER);
     }
     this.hideMentionList();
   }
@@ -419,9 +418,8 @@ class Mention {
       });
     }
 
-    this.mentionContainer.style.top = `${topPos}px`;
-    this.mentionContainer.style.left = `${leftPos}px`;
-
+    this.mentionContainer.style.top = `${containerPos.top + topPos}px`;
+    this.mentionContainer.style.left = `${containerPos.left + leftPos}px`;
     this.mentionContainer.style.visibility = "visible";
   }
 
